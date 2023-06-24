@@ -1,6 +1,11 @@
 const express = require("express");
+const bodyParser = require("body-parser")
+
+
 
 const app = express();
+
+app.use(bodyParser.json())
 const port = 5000;
 
 let users = [
@@ -38,7 +43,7 @@ app.get("/users/:id", (req, res) => {
   console.log(id);
 });
 
-app.post("users",(req,res) => {
+app.post("/users",(req,res) => {
     const {name,email,country,contact} = req.body
     const user = {
         id:users.length + 1,
@@ -49,6 +54,11 @@ app.post("users",(req,res) => {
     }
     users.push(user)
     res.send("Yeni kullanıcı oluşturuldu")
+})
+
+app.delete("/users",(req,res) => {
+    users.filter((user) => user.id !== req.params.id)
+    res.send(users)
 })
 
 app.listen(port, () => {
