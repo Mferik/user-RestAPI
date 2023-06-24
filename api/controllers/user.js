@@ -37,7 +37,7 @@ export const getUsers = (req, res) => {
   export const createUser = (req, res) => {
     const { name, email, country, contact } = req.body;
     const user = {
-      id: users.length + 1,
+      id: uuid(),
       name: name,
       email: email,
       country: country,
