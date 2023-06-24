@@ -24,18 +24,31 @@ app.get("/", (req, res) => {
   res.send("Server aktif");
 });
 
-app.get("/users",(req,res) => {
-    res.send(users)
-})
+app.get("/users", (req, res) => {
+  res.send(users);
+});
 
-app.get("/users/:id",(req,res) => {
-    const id = req.params.id;
-    const user = users.find((user) => user.id ===Number(id))
-    if(!user){
-        res.status(400).send("Kullanıcı yok")
+app.get("/users/:id", (req, res) => {
+  const id = req.params.id;
+  const user = users.find((user) => user.id === Number(id));
+  if (!user) {
+    res.status(400).send("Kullanıcı yok");
+  }
+  res.send(user);
+  console.log(id);
+});
+
+app.post("users",(req,res) => {
+    const {name,email,country,contact} = req.body
+    const user = {
+        id:users.length + 1,
+        name:name,
+        email:email,
+        country:country,
+        contact:contact
     }
-    res.send(user)
-    console.log(id)
+    users.push(user)
+    res.send("Yeni kullanıcı oluşturuldu")
 })
 
 app.listen(port, () => {
